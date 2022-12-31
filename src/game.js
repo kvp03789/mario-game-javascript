@@ -1,10 +1,11 @@
 import { checkBoxCollision, checkAllBoxes } from "./utils";
+import PlatformImage from './images/platform.png'
 
 const canvas = document.querySelector("canvas")
 const c = canvas.getContext('2d')
-
-canvas.width = 1000;
-canvas.height = 1000;
+console.log(c)
+canvas.width = 1024;
+canvas.height = 576;
 
 const gravity = 1
 
@@ -38,33 +39,33 @@ export class Player {
     }
   }
   
-  
   export class Platform {
-    constructor({x, y}) {
+    constructor({x, y, image}) {
       this.position = {
         x,
         y
       }
-  
-      this.width = 200
-      this.height = 20
+      this.image = image
+      this.width = image.width
+      this.height = image.height
     }
   
     draw() {
-      c.fillStyle = 'blue';
-      c.fillRect(this.position.x, this.position.y, this.width, this.height)
+      c.drawImage(this.image, this.position.x, this.position.y)
     }
   
   }
 
+  const image = new Image()
+  image.src = PlatformImage
   export const player = new Player();
 
   const platforms = [
     new Platform({
-      x: 200, y: 800
+      x: 0, y: 200, image
   }), 
     new Platform({
-      x: 400, y: 600
+      x: image.width, y: 200, image
     })
   ]
 
@@ -81,12 +82,12 @@ export class Player {
   
   export function animate() {
     requestAnimationFrame(animate)
-    c.clearRect(0, 0, canvas.width, canvas.height)
-    player.update();
+    c.fillStyle = 'white';
+    c.fillRect(0, 0, canvas.width, canvas.height)
     platforms.forEach(platform => {
       platform.draw();
     })
-    
+    player.update();
   
     if(keys.right.pressed && player.position.x < 400){
       player.velocity.x = 5 }
@@ -117,4 +118,5 @@ export class Player {
     if(scrollOffset === 2000){
       console.log("YOU WIN!")
     }
+    
   }
