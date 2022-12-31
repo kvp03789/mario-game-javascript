@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/mario-game-javascript/static/css/main.315b9073.css",
+    "main.js": "/mario-game-javascript/static/js/main.56b9498f.js",
+    "static/media/background.png": "/mario-game-javascript/static/media/background.072d51bcc9c09311d4c2.png",
+    "static/media/hills.png": "/mario-game-javascript/static/media/hills.cfffe4c371f5e11d372b.png",
+    "static/media/platform.png": "/mario-game-javascript/static/media/platform.ffab39d3487de561be1a.png",
+    "index.html": "/mario-game-javascript/index.html",
+    "main.315b9073.css.map": "/mario-game-javascript/static/css/main.315b9073.css.map",
+    "main.56b9498f.js.map": "/mario-game-javascript/static/js/main.56b9498f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.315b9073.css",
+    "static/js/main.56b9498f.js"
+  ]
+}
