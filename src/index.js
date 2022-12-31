@@ -1,4 +1,4 @@
-import {Player, Platform, animate, player, platform, keys} from "./game"
+import {animate, player, keys} from "./game"
 import "./index.css";
 animate();
 
