@@ -2,6 +2,7 @@ import { checkBoxCollision, createImage } from "./utils";
 import PlatformImage from './images/platform.png'
 import HillsImage from './images/hills.png'
 import BackgroundImage from './images/background.png' 
+import SmallPlatformImage from './images/platformSmallTall.png' 
 
 const canvas = document.querySelector("canvas")
 const c = canvas.getContext('2d')
@@ -23,6 +24,7 @@ export class Player {
       }
       this.width = 30
       this.height = 30
+      this.speed = 8
     }
   
     draw() {
@@ -83,7 +85,7 @@ export class Player {
     }
   }
 
-  const init = () => {
+  export const init = () => {
     player = new Player();
     //platformImage = createImage(PlatformImage)
 
@@ -96,6 +98,15 @@ export class Player {
       }),
       new Platform({
         x: platformImage.width * 2 + 100, y: 450, image: platformImage
+      }),
+      new Platform({
+        x: platformImage.width * 3 + 300, y: 450, image: platformImage
+      }),
+      new Platform({
+        x: platformImage.width * 4 + 1200, y: 450, image: platformImage
+      }),
+      new Platform({
+        x: platformImage.width * 4 + 700, y: 300, image: smallPlatformImage
       })
     ]
 
@@ -115,31 +126,10 @@ export class Player {
 
   export let player = new Player();
   const platformImage = createImage(PlatformImage)
+  const smallPlatformImage = createImage(SmallPlatformImage)
+  let platforms = []
 
-  let platforms = [
-    new Platform({
-      x: 0, y: 450, image: platformImage
-  }), 
-    new Platform({
-      x: platformImage.width, y: 450, image: platformImage
-    }),
-    new Platform({
-      x: platformImage.width * 2 + 100, y: 450, image: platformImage
-    })
-  ]
-
-  let genericObjects = [
-    new GenericObject({
-      x: -1,
-      y: -1,
-      image: createImage(BackgroundImage)
-    }),
-    new GenericObject({
-      x: -1,
-      y: -1,
-      image: createImage(HillsImage)
-    })
-  ]
+  let genericObjects = []
 
   let scrollOffset = 0;
   
@@ -157,29 +147,31 @@ export class Player {
     })
     player.update();
 
+    //handle player movement
       if(keys.right.pressed && player.position.x < 400){
-      player.velocity.x = 5 }
-    else if(keys.left.pressed && player.position.x > 100) {
-      player.velocity.x = -5
+        player.velocity.x = player.speed }
+      else if((keys.left.pressed && player.position.x > 100) ||
+      keys.left.pressed && scrollOffset === 0 && player.position.x > 0) {
+        player.velocity.x = -player.speed
     } else {
       player.velocity.x = 0;}
 
       //handle background scroll and paralax effect
       if(keys.right.pressed){
-        scrollOffset += 5;
+        scrollOffset += player.speed;
         platforms.forEach(platform => {
-          platform.position.x -= 5
+          platform.position.x -= player.speed
         })
         genericObjects.forEach((object) => {
-          object.position.x -= 3
+          object.position.x -= player.speed * .66
         })
-      }else if(keys.left.pressed){
-          scrollOffset -= 5;
+      }else if(keys.left.pressed && scrollOffset > 0){
+          scrollOffset -= player.speed;
           platforms.forEach(platform => {
-          platform.position.x += 5
+          platform.position.x += player.speed
         })
         genericObjects.forEach((object) => {
-          object.position.x += 3
+          object.position.x += player.speed * .66
         }) 
       }
     
@@ -190,7 +182,7 @@ export class Player {
       }) 
     )
     //win condition
-    if(scrollOffset === 2000){
+    if(scrollOffset > platformImage.width * 4 + 1200){
       console.log("YOU WIN!")
     }
 

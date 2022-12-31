@@ -1,5 +1,6 @@
-import {animate, player, keys} from "./game"
+import {animate, player, keys, init} from "./game"
 import "./index.css";
+init()
 animate();
 
 
@@ -37,7 +38,7 @@ window.addEventListener('keyup', (e) => {
       break
     case 'w': 
       console.log('up')
-      player.velocity.y = 0
+      // player.velocity.y = 0
       break
     case 's': 
       console.log('down')
