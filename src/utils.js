@@ -12,9 +12,8 @@ export const checkBoxCollision = (object1, object2) => {
     return true
 }
 
-export const checkAllBoxes = (object1, ...arr) => {
-    if(arr.every((platform) => {
-        checkBoxCollision(object1, platform)
-    }))
-    return true
+export const createImage = (imageSource) => {
+  const image = new Image()
+  image.src = imageSource
+  return image
 }
